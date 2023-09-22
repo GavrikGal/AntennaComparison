@@ -4,12 +4,12 @@ import matplotlib.pyplot as plt
 from service import read_data, plot_line, plot_stats, plot_min_max, mean_p_value, setup_grid, stats
 
 
-first_file = r'z:\0. Данные\SA\data\traces\2023\Антенны\П6-23М\Перед поверкой\750-2000 МГц [tr1-ГП, tr2-ВП].csv'
+first_file = r'data\П6-23М\Перед поверкой\750-2000 МГц [tr1-ГП, tr2-ВП].csv'
 # sec_file = r'z:\0. Данные\SA\data\traces\2023\Антенны\П6-23М\После поверки\750-2000 МГц ГП_3_центр.csv'
 files = [
-    r'z:\0. Данные\SA\data\traces\2023\Антенны\П6-23М\После поверки\750-2000 МГц ГП_3_лево.csv',
-    r'z:\0. Данные\SA\data\traces\2023\Антенны\П6-23М\После поверки\750-2000 МГц ГП_3_право.csv',
-    r'z:\0. Данные\SA\data\traces\2023\Антенны\П6-23М\После поверки\750-2000 МГц ГП_3_центр.csv',
+    r'data\П6-23М\После поверки\750-2000 МГц ГП_3_лево.csv',
+    r'data\П6-23М\После поверки\750-2000 МГц ГП_3_право.csv',
+    r'data\П6-23М\После поверки\750-2000 МГц ГП_3_центр.csv',
 ]
 
 df1 = read_data(first_file, 1)
@@ -27,7 +27,7 @@ plot_stats(ax, df2_stats, color='tab:blue')
 plot_min_max(ax, df2_stats, color='tab:blue')
 plot_line(ax, df1, color='tab:red')
 
-df2_stats.to_csv('results.csv')
+df2_stats.to_csv(r'data\П6-23М\results.csv')
 
 mean_p_value = mean_p_value(df1, df2, df2_stats)
 plt.title(f'Средняя вероятность, принадлежности первой выборки ко второй: {mean_p_value*100:.2f}%')
