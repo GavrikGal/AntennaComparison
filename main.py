@@ -21,7 +21,8 @@ for file in files:
 df2_stats = stats(df2)
 
 fig, ax = plt.subplots(figsize=(12, 8))
-setup_grid(ax, f_min=600, f_max=2100, f_tick=200, fm_tick=25, y_min=40, y_max=95, y_tick=10, ym_tick=1)
+setup_grid(ax, f_min=600, f_max=2100, f_tick=200, fm_tick=25,
+           y_min=40, y_max=95, y_tick=10, ym_tick=1)
 
 plot_stats(ax, df2_stats, color='tab:blue')
 plot_min_max(ax, df2_stats, color='tab:blue')
