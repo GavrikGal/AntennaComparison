@@ -25,7 +25,7 @@ def stats(df: pd.DataFrame) -> pd.DataFrame:
 def plot_stats(ax, df_stats: pd.DataFrame, color=None) -> None:
     ax.plot(df_stats['mean'], linewidth=1.0, label='Среднее после поверки')
     ax.fill_between(df_stats.index.values, df_stats['interval-'], df_stats['interval+'], color=color,
-                    alpha=0.5, linewidth=0.4, label='Доверительный интервал')
+                    alpha=0.4, linewidth=0.4, label='Доверительный интервал')
 
 
 def plot_min_max(ax, df_stats: pd.DataFrame, color=None) -> None:

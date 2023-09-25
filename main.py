@@ -5,19 +5,19 @@ from service import read_data, plot_line, plot_stats, plot_min_max, mean_p_value
 
 
 first_file = r'data\П6-23М\Перед поверкой\750-2000 МГц [tr1-ГП, tr2-ВП].csv'
-# sec_file = r'z:\0. Данные\SA\data\traces\2023\Антенны\П6-23М\После поверки\750-2000 МГц ГП_3_центр.csv'
-files = [
-    r'data\П6-23М\После поверки\750-2000 МГц ГП_3_лево.csv',
-    r'data\П6-23М\После поверки\750-2000 МГц ГП_3_право.csv',
-    r'data\П6-23М\После поверки\750-2000 МГц ГП_3_центр.csv',
-]
+sec_file = r'data\П6-23М\После поверки\750-2000 МГц ГП_4_центр.csv'
+# files = [
+#     r'data\П6-23М\После поверки\750-2000 МГц ГП_3_лево.csv',
+#     r'data\П6-23М\После поверки\750-2000 МГц ГП_3_право.csv',
+#     r'data\П6-23М\После поверки\750-2000 МГц ГП_3_центр.csv',
+# ]
 
 df1 = read_data(first_file, 1)
-# df2 = read_data(sec_file, 6)
+df2 = read_data(sec_file, 6)
 
-df2 = pd.DataFrame()
-for file in files:
-    df2 = pd.concat([df2, read_data(file, 6)], axis=1)
+# df2 = pd.DataFrame()
+# for file in files:
+#     df2 = pd.concat([df2, read_data(file, 6)], axis=1)
 df2_stats = stats(df2)
 
 fig, ax = plt.subplots(figsize=(12, 8))
