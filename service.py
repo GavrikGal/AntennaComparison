@@ -8,6 +8,17 @@ def read_data(path: str, col_n: int) -> pd.DataFrame:
                      names=['F, MHz'] + [f'E{i}, dBuV/m' for i in range(1, col_n+1)],
                      index_col=0)
     df.index /= 1000000
+    df.name = 'До поверки'
+    return df
+
+
+def read_comsol_data(path: str, col_n: int, calibrate: int) -> pd.DataFrame:
+    df = pd.read_csv(path, sep='         ', encoding='utf-8', usecols=range(col_n+1), skiprows=5,
+                     names=['F, MHz'] + [f'E{i}, dBuV/m' for i in range(1, col_n+1)],
+                     index_col=0)
+    df.index *= 1000
+    df = df - calibrate
+    df.name = 'Расчетные данные'
     return df
 
 
@@ -33,8 +44,9 @@ def plot_min_max(ax, df_stats: pd.DataFrame, color=None) -> None:
                     linewidth=0.5, label='Мин-Макс значения')
 
 
-def plot_line(ax, df: pd.DataFrame, color=None) -> None:
-    ax.plot(df, linewidth=1.2, color=color, label='До поверки')
+def plot_line(ax, df: pd.DataFrame, color=None, linestyle=None) -> None:
+    label = 'До поверки' if not df.name else df.name
+    ax.plot(df, linewidth=1.2, color=color, label=label, linestyle=linestyle)
 
 
 def setup_grid(ax, f_min, f_max, f_tick, fm_tick, y_min, y_max, y_tick, ym_tick):
@@ -55,6 +67,8 @@ def setup_grid(ax, f_min, f_max, f_tick, fm_tick, y_min, y_max, y_tick, ym_tick)
 
 
 def mean_p_value(df1, df2, df2_stats):
+    # df3 = pd.concat([df1, df2], axis=1, ignore_index=True)
+    # print(df3)
     t_value, p_value = st.ttest_1samp(df2, df1, axis=1)
     df2_stats['t-value'] = t_value
     df2_stats['p-value'] = p_value
