@@ -17,7 +17,7 @@ def read_comsol_data(path: str, col_n: int, calibrate: int) -> pd.DataFrame:
                      names=['F, MHz'] + [f'E{i}, dBuV/m' for i in range(1, col_n+1)],
                      index_col=0)
     df.index *= 1000
-    df = df - calibrate
+    df = df + calibrate
     df.name = 'Расчетные данные'
     return df
 
@@ -67,10 +67,9 @@ def setup_grid(ax, f_min, f_max, f_tick, fm_tick, y_min, y_max, y_tick, ym_tick)
 
 
 def mean_p_value(df1, df2, df2_stats):
-    # df3 = pd.concat([df1, df2], axis=1, ignore_index=True)
-    # print(df3)
-    t_value, p_value = st.ttest_1samp(df2, df1, axis=1)
-    df2_stats['t-value'] = t_value
-    df2_stats['p-value'] = p_value
-    mean_p_value = df2_stats['p-value'].mean()
-    return mean_p_value
+    df3 = pd.merge(df2, df1, right_index=True, left_index=True)
+    t_value, p_value = st.ttest_1samp(df3.iloc[:, :-1], df3.iloc[:, -1:], axis=1)
+    # df2_stats['t-value'] = t_value
+    # df2_stats['p-value'] = p_value
+    # mean_p_value = df2_stats['p-value'].mean()
+    return p_value.mean()
