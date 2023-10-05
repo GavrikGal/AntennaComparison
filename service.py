@@ -66,7 +66,7 @@ def setup_grid(ax, f_min, f_max, f_tick, fm_tick, y_min, y_max, y_tick, ym_tick)
     ax.grid(visible=True, which='minor', alpha=0.05)
 
 
-def mean_p_value(df1, df2, df2_stats):
+def mean_p_value(df1, df2, df2_stats=None):
     df3 = pd.merge(df2, df1, right_index=True, left_index=True)
     t_value, p_value = st.ttest_1samp(df3.iloc[:, :-1], df3.iloc[:, -1:], axis=1)
     # df2_stats['t-value'] = t_value
